@@ -3,6 +3,11 @@
 backup_dir="/backup/"
 temp_dir="/tmp"$backup_dir
 
+user="backup-ngcp"
+group="backup-ngcp"
+
+name="backup-ngcp_"$(date +%Y%m%d_%H%M%S)
+
 databases=( accounting billing carrier fileshare freeswitch kamailio ldap mysql ngcp prosody provisioning stats sys )
 
 echo -ne "preparing environement         [ ]"
@@ -34,7 +39,9 @@ if [ ! -d $backup_dir ]; then
   /usr/bin/mkdir -p $backup_dir
 fi
 
-/usr/bin/tar -cf $backup_dir"backup-ngcp-"$(date +%Y%m%d%H%M%S)".tar.gz" -C $temp_dir $(ls -A $temp_dir)
+/usr/bin/tar -cf $backup_dir$name".tar.gz" -C $temp_dir $(ls -A $temp_dir)
+
+/usr/bin/chown $user:$group $backup_dir$name".tar.gz"
 
 echo -e "\b\b\b[\xE2\x9C\x94]"
 echo -ne "cleaing environment            [ ]"
