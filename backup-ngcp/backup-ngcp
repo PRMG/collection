@@ -20,18 +20,28 @@ fi
 /usr/bin/mkdir -p $temp_dir
 
 echo -e "\b\b\b[\xE2\x9C\x94]"
+
 echo -ne "dumping MySQL databases        [ ]"
 sleep 1
 
 /usr/bin/mysqldump --databases $databases > $temp_dir"dump.sql"
 
 echo -e "\b\b\b[\xE2\x9C\x94]"
+
 echo -ne "creating backup of ngcp-config [ ]"
 sleep 1
 
 /usr/bin/tar -cf $temp_dir"ngcp-config.tar.gz" -C / etc/ngcp-config
 
 echo -e "\b\b\b[\xE2\x9C\x94]"
+
+echo -ne "cleaning environment           [ ]"
+sleep 1
+
+/usr/bin/rm -R $backup_dir$name".tar.gz"
+
+echo -e "\b\b\b[\xE2\x9C\x94]"
+
 echo -ne "combining files                [ ]"
 sleep 1
 
@@ -44,7 +54,8 @@ fi
 /usr/bin/chown $user:$group $backup_dir$name".tar.gz"
 
 echo -e "\b\b\b[\xE2\x9C\x94]"
-echo -ne "cleaing environment            [ ]"
+
+echo -ne "cleaning environment           [ ]"
 sleep 1
 
 /usr/bin/rm -R $temp_dir
