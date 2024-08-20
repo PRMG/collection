@@ -1,0 +1,49 @@
+#!/usr/bin/bash
+
+backup_dir="/backup/"
+temp_dir="/tmp"$backup_dir
+
+databases=( accounting billing carrier fileshare freeswitch kamailio ldap mysql ngcp prosody provisioning stats sys )
+
+echo -ne "preparing environement         [ ]"
+sleep 1
+
+if [ -d $temp_dir ]; then
+  /usr/bin/rm -R $temp_dir
+fi
+
+/usr/bin/mkdir -p $temp_dir
+
+echo -e "\b\b\b[\xE2\x9C\x94]"
+echo -ne "dumping MySQL databases        [ ]"
+sleep 1
+
+/usr/bin/mysqldump --databases $databases > $temp_dir"dump.sql"
+
+echo -e "\b\b\b[\xE2\x9C\x94]"
+echo -ne "creating backup of ngcp-config [ ]"
+sleep 1
+
+/usr/bin/tar -cf $temp_dir"ngcp-config.tar.gz" -C / etc/ngcp-config
+
+echo -e "\b\b\b[\xE2\x9C\x94]"
+echo -ne "combining files                [ ]"
+sleep 1
+
+if [ ! -d $backup_dir ]; then
+  /usr/bin/mkdir -p $backup_dir
+fi
+
+/usr/bin/tar -cf $backup_dir"backup-ngcp-"$(date +%Y%m%d%H%M%S)".tar.gz" -C $temp_dir $(ls -A $temp_dir)
+
+echo -e "\b\b\b[\xE2\x9C\x94]"
+echo -ne "cleaing environment            [ ]"
+sleep 1
+
+/usr/bin/rm -R $temp_dir
+
+
+echo -e "\b\b\b[\xE2\x9C\x94]"
+sleep 1
+
+echo -e  "all done                       [\xE2\x9C\x94]"
