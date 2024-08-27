@@ -31,7 +31,7 @@ echo -e "\b\b\b[\xE2\x9C\x94]"
 echo -ne "creating backup of ngcp-config [ ]"
 sleep 1
 
-/usr/bin/tar -cfz $temp_dir"ngcp-config.tar.gz" -C / etc/ngcp-config
+/usr/bin/tar -czf $temp_dir"ngcp-config.tar.gz" -C / etc/ngcp-config
 
 echo -e "\b\b\b[\xE2\x9C\x94]"
 
@@ -49,7 +49,7 @@ if [ ! -d $backup_dir ]; then
   /usr/bin/mkdir -p $backup_dir
 fi
 
-/usr/bin/tar -cfz $backup_dir$name".tar.gz" -C $temp_dir $(ls -A $temp_dir)
+/usr/bin/tar -czf $backup_dir$name".tar.gz" -C $temp_dir $(ls -A $temp_dir)
 
 /usr/bin/chown $user:$group $backup_dir$name".tar.gz"
 
