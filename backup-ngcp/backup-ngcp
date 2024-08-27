@@ -38,7 +38,9 @@ echo -e "\b\b\b[\xE2\x9C\x94]"
 echo -ne "cleaning environment           [ ]"
 sleep 1
 
-/usr/bin/rm -R $backup_dir$name".tar.gz"
+if [ -f $backup_dir$name".tar.gz" ]; then
+  /usr/bin/rm -R $backup_dir$name".tar.gz"
+fi
 
 echo -e "\b\b\b[\xE2\x9C\x94]"
 
