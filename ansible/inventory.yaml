@@ -3,8 +3,12 @@ all:
     debian:
       hosts:
         a.lx1duc.ampr.org:
+        vault.lx1duc.radio:
+        lx1duc-pmg.lx0duc.ampr.org:
         dns.lx4cg.ampr.org:
         ermesinde.as60391.net:
+        charlotte.rbx7.as60391.net:
+        wilhelm.rbx7.as60391.net:
         ett-sal-vps-01.acett.network:
         fra-han-vps-01.acett.network:
     dns:

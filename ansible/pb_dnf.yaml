@@ -1,0 +1,9 @@
+- name: DNF update and upgrade
+  hosts: almalinux
+  become: yes
+  tasks:
+  - name: Update DNF cache and installed packages
+    dnf:
+      state: latest
+      update_cache: true
+      upate_only: true
