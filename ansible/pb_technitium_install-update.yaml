@@ -1,0 +1,11 @@
+- name: Install or update Technitium DNS Server
+  hosts: dns
+  become: yes
+  tasks:
+    - name: Run installer
+      shell: "curl -sSL https://download.technitium.com/dns/install.sh | bash"
+      register: output
+
+    - name: Show the output of installer
+      debug:
+        msg: "{{ output.stdout }}"

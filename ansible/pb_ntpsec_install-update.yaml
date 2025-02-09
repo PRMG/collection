@@ -1,0 +1,21 @@
+- name: Install or restart NTPsec Server
+  hosts: ntp
+  become: yes
+  tasks:
+    - name: Ensure NTPsec is installed
+      apt: name=ntpsec state=latest update_cache=yes
+
+    - name: Ensure ntpstat (to report the synchronisation state of the NTP daemon)
+      apt: name=ntpstat state=latest update_cache=yes
+
+    - name: Start service ntpsec, if not started
+      systemd:
+        name: ntpsec
+        state: started
+        enabled: yes
+
+    - name: report the synchronisation state of the NTP daemon
+      shell: ntpstat
+      register: ntpstat
+
+    - debug: var=ntpstat.stdout_lines

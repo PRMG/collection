@@ -1,0 +1,26 @@
+all:
+  children:
+    debian:
+      hosts:
+        a.lx1duc.ampr.org:
+        dns.lx4cg.ampr.org:
+        ermesinde.as60391.net:
+        ett-sal-vps-01.acett.network:
+        fra-han-vps-01.acett.network:
+    dns:
+      hosts:
+        a.lx1duc.ampr.org:
+        dns.lx4cg.ampr.org:
+        ermesinde.as60391.net:
+        ett-sal-vps-01.acett.network:
+        fra-han-vps-01.acett.network:
+    ntp:
+      hosts:
+        a.lx1duc.ampr.org:
+        dns.lx4cg.ampr.org:
+        ett-sal-vps-01.acett.network:
+        fra-han-vps-01.acett.network:
+
+  vars:
+    ansible_ssh_private_key_file: /home/mstorck/.ssh/id_ed25519
+    ansible_user: ansible
