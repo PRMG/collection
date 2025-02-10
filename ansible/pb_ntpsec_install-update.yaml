@@ -17,5 +17,6 @@
     - name: report the synchronisation state of the NTP daemon
       shell: ntpstat
       register: ntpstat
+      changed_when: ntpstat.rc != 0
 
     - debug: var=ntpstat.stdout_lines

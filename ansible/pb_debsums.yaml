@@ -1,0 +1,17 @@
+- name: Verify file hashes
+  hosts: debian
+  become: yes
+  tasks:
+    - name: Ensure debsums is installed
+      apt:
+        name: debsums
+        state: latest
+        update_cache: true
+    - name: Verify checksums
+      shell: "dpkg -l | egrep '^ii' | awk '{print $2}' | xargs debsums | egrep -v 'OK'"
+      register: output
+      failed_when: output.rc >= 2
+      changed_when: output.rc != 1
+    - name: Show output of debsums
+      debug:
+        msg: "{{ output.stdout_lines }}"
