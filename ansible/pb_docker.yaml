@@ -1,0 +1,51 @@
+- name: Manage Docker hosts
+  hosts: docker
+  become: true
+  tasks:
+  - name: Install gpg
+    ansible.builtin.apt:
+      name: gpg
+      state: latest
+      update_cache: true
+
+  - name: Add docker apt-key
+    ansible.builtin.apt_key:
+      url: https://download.docker.com/linux/debian/gpg
+      state: present
+
+  - name: Add docker apt repository
+    ansible.builtin.apt_repository:
+      repo: deb https://download.docker.com/linux/{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} stable
+      state: present
+      filename: docker
+      update_cache: true
+
+  - name: Install docker-ce
+    ansible.builtin.apt:
+      name: docker-ce
+      state: latest
+      update_cache: true
+
+  - name: Install docker-ce-cli
+    ansible.builtin.apt:
+      name: docker-ce-cli
+      state: latest
+      update_cache: true
+
+  - name: Install containerd.io
+    ansible.builtin.apt:
+      name: containerd.io
+      state: latest
+      update_cache: true
+
+  - name: Install docker-buildx-plugin
+    ansible.builtin.apt:
+      name: docker-buildx-plugin
+      state: latest
+      update_cache: true
+
+  - name: Install docker-compose-plugin
+    ansible.builtin.apt:
+      name: docker-compose-plugin
+      state: latest
+      update_cache: true

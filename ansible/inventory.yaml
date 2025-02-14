@@ -5,12 +5,15 @@ all:
         a.lx1duc.ampr.org:
         vault.lx1duc.radio:
         lx1duc-pmg.lx0duc.ampr.org:
+        #pve1.lx0duc.hamnet.radio:
         dns.lx4cg.ampr.org:
         pmg.lx4cg.ampr.org:
-        ermesinde.as60391.net:
         charlotte.rbx7.as60391.net:
+        ermesinde.as60391.net:
+        jean.as60391.net:
         wilhelm.rbx7.as60391.net:
         ett-sal-vps-01.acett.network:
+        ett-vps-02.acett.network:
         fra-han-vps-01.acett.network:
     dns:
       hosts:
@@ -19,6 +22,11 @@ all:
         ermesinde.as60391.net:
         ett-sal-vps-01.acett.network:
         fra-han-vps-01.acett.network:
+
+    docker:
+      hosts:
+        ett-vps-02.acett.network:
+
     ntp:
       hosts:
         a.lx1duc.ampr.org:
@@ -27,6 +35,19 @@ all:
         ett-sal-vps-01.acett.network:
         fra-han-vps-01.acett.network:
 
+    crowdsec:
+      hosts:
+        dns.lx4cg.ampr.org:
+        pmg.lx4cg.ampr.org:
+        ermesinde.as60391.net:
+        jean.as60391.net:
+
+    routeros:
+      hosts:
+        rtr-16.lx0duc.hamnet.radio:
+      vars:
+        ansible_network_os: routeros
+        ansible_user: ansible
   vars:
     ansible_ssh_private_key_file: /home/mstorck/.ssh/id_ed25519
     ansible_user: ansible

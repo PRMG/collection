@@ -1,4 +1,3 @@
-
 - name: APT update and upgrade
   hosts: debian
   become: yes

@@ -1,0 +1,34 @@
+- name: Manage CrowdSec installation
+  hosts: crowdsec
+  become: true
+  tasks:
+  - name: Install gpg
+    ansible.builtin.apt:
+      name: gpg
+      state: latest
+      update_cache: true
+
+  - name: Add crowdsec apt-key
+    ansible.builtin.apt_key:
+      url: https://packagecloud.io/crowdsec/crowdsec/gpgkey
+      state: present
+
+  # https://packagecloud.io/crowdsec/crowdsec/install#manual-deb
+  - name: Add crowdsec apt repository
+    ansible.builtin.apt_repository:
+      repo: deb https://packagecloud.io/crowdsec/crowdsec/{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} main
+      state: present
+      filename: crowdsec
+      update_cache: true
+
+  - name: Install crowdsec
+    ansible.builtin.apt:
+      name: crowdsec
+      state: present
+      update_cache: true
+
+  - name: Install bouncer for iptables
+    ansible.builtin.apt:
+      name: crowdsec-firewall-bouncer-iptables
+      state: present
+      update_cache: true
