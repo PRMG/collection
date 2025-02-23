@@ -1,11 +1,17 @@
 all:
   children:
+    crowdsec:
+      hosts:
+        dns.lx4cg.ampr.org:
+        pmg.lx4cg.ampr.org:
+        ermesinde.as60391.net:
+        jean.as60391.net:
+
     debian:
       hosts:
         a.lx1duc.ampr.org:
         vault.lx1duc.radio:
         lx1duc-pmg.lx0duc.ampr.org:
-        #pve1.lx0duc.hamnet.radio:
         dns.lx4cg.ampr.org:
         pmg.lx4cg.ampr.org:
         charlotte.rbx7.as60391.net:
@@ -14,14 +20,17 @@ all:
         wilhelm.rbx7.as60391.net:
         ett-sal-vps-01.acett.network:
         ett-vps-02.acett.network:
-        fra-han-vps-01.acett.network:
+        fra-vps-01.acett.network:
+        fd4ddf07-0f28-4c26-ac30-a13d83286d34.pub.instances.scw.cloud:
+
     dns:
       hosts:
         a.lx1duc.ampr.org:
         dns.lx4cg.ampr.org:
         ermesinde.as60391.net:
         ett-sal-vps-01.acett.network:
-        fra-han-vps-01.acett.network:
+        fra-vps-01.acett.network:
+        fd4ddf07-0f28-4c26-ac30-a13d83286d34.pub.instances.scw.cloud:
 
     docker:
       hosts:
@@ -33,14 +42,8 @@ all:
         dns.lx4cg.ampr.org:
         ermesinde.as60391.net:
         ett-sal-vps-01.acett.network:
-        fra-han-vps-01.acett.network:
-
-    crowdsec:
-      hosts:
-        dns.lx4cg.ampr.org:
-        pmg.lx4cg.ampr.org:
-        ermesinde.as60391.net:
-        jean.as60391.net:
+        fra-vps-01.acett.network:
+        fd4ddf07-0f28-4c26-ac30-a13d83286d34.pub.instances.scw.cloud:
 
     routeros:
       hosts:
@@ -48,6 +51,12 @@ all:
       vars:
         ansible_network_os: routeros
         ansible_user: ansible
+
+    snmpd:
+      hosts:
+        ett-sal-vps-01.acett.network:
+        fd4ddf07-0f28-4c26-ac30-a13d83286d34.pub.instances.scw.cloud:
+
   vars:
     ansible_ssh_private_key_file: /home/mstorck/.ssh/id_ed25519
     ansible_user: ansible

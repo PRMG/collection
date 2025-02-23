@@ -2,10 +2,35 @@
   hosts: dns
   become: yes
   tasks:
-    - name: Run installer
-      shell: "curl -sSL https://download.technitium.com/dns/install.sh | bash"
-      register: output
+  - name: Install gpg
+    ansible.builtin.apt:
+      name: gpg
+      state: latest
+      update_cache: true
 
-    - name: Show the output of installer
-      debug:
-        msg: "{{ output.stdout }}"
+  - name: Add Microsoft apt-key
+    ansible.builtin.apt_key:
+      url: https://packages.microsoft.com/keys/microsoft.asc
+      state: present
+
+  # https://packagecloud.io/crowdsec/crowdsec/install#manual-deb
+  - name: Add crowdsec apt repository
+    ansible.builtin.apt_repository:
+      repo: deb https://packages.microsoft.com/debian/{{ ansible_distribution_major_version }}/prod {{ ansible_distribution_release }} main
+      state: present
+      filename: microsoft
+      update_cache: true
+
+  - name: Install libmsquic
+    ansible.builtin.apt:
+      name: libmsquic
+      state: latest
+      update_cache: true
+
+  - name: Run installer
+    shell: "curl -sSL https://download.technitium.com/dns/install.sh | bash"
+    register: output
+
+  - name: Show the output of installer
+    debug:
+      msg: "{{ output.stdout }}"

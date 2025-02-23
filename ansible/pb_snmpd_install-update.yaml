@@ -1,0 +1,15 @@
+- name: Install or update SNMP Server
+  hosts: snmpd
+  become: yes
+  tasks:
+    - name: Ensure SNMPd is installed
+      apt:
+        name: snmpd
+        state: latest
+        update_cache: yes
+
+    - name: Start service snmpd, if not started
+      systemd:
+        name: snmpd
+        state: started
+        enabled: yes
