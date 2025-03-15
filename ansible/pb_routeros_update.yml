@@ -2,17 +2,17 @@
 - name: Check and Install Updates on RouterOS
   hosts: routeros
   gather_facts: no
-  module_defaults:
-    group/community.routeros.api:
-      hostname: "{{ inventory_hostname }}"
-      password: ZvQV6py9CjnEKuRW4bF2TrNYxe8qGJ37
-      username: "{{ ansible_user }}"
+#  module_defaults:
+#    group/community.routeros.routeros:
+#      hostname: "{{ inventory_hostname }}"
+#      password: ZvQV6py9CjnEKuRW4bF2TrNYxe8qGJ37
+#      username: "{{ ansible_user }}"
   connection: network_cli
 
   tasks:
     - name: Check current RouterOS version
-      community.routeros.api:
-        path:
+      community.routeros.command:
+        commands:
           - "system package print"
       register: routeros_version
 
@@ -21,8 +21,8 @@
         var: routeros_version
 
     - name: Check for available updates
-      community.routeros.api:
-        path:
+      community.routeros.command:
+        commands:
           - "system package update check-for-updates"
       register: update_check
 
@@ -31,15 +31,15 @@
         var: update_check
 
     - name: Install updates
-      community.routeros.api:
-        path:
+      community.routeros.command:
+        commands:
           - "system package update install"
       when: "'installed' in update_check.stdout"  # Only install if update is available
       register: update_install
 
     - name: Reboot the router after the update
-      community.routeros.api:
-        path:
+      community.routeros.command:
+        commands:
           - "system reboot"
       when: update_install is changed
       register: reboot

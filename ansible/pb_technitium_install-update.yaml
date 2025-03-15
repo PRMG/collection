@@ -13,8 +13,7 @@
       url: https://packages.microsoft.com/keys/microsoft.asc
       state: present
 
-  # https://packagecloud.io/crowdsec/crowdsec/install#manual-deb
-  - name: Add crowdsec apt repository
+  - name: Add Microsoft apt repository
     ansible.builtin.apt_repository:
       repo: deb https://packages.microsoft.com/debian/{{ ansible_distribution_major_version }}/prod {{ ansible_distribution_release }} main
       state: present
@@ -33,4 +32,4 @@
 
   - name: Show the output of installer
     debug:
-      msg: "{{ output.stdout }}"
+      msg: "{{ output.stdout_lines }}"

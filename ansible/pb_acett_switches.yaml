@@ -1,0 +1,78 @@
+---
+- name: Manage ACETT Switches
+  hosts: acett_switches
+  gather_facts: no
+  module_defaults:
+    group/community.routeros.api:
+      hostname: "{{ inventory_hostname }}"
+      password: ZvQV6py9CjnEKuRW4bF2TrNYxe8qGJ37
+      username: "{{ ansible_user }}"
+  connection: network_cli
+
+  tasks:
+    - name: Collect facts
+      community.routeros.api_facts:
+        gather_subset: default
+
+    - debug:
+        var: ansible_net_model
+
+    - name: Check system package update
+      community.routeros.api:
+        path: "system package update"
+      register: spu
+      changed_when: 'spu.msg[0].status == "New version is available"'
+
+    - name: Check ip service api
+      community.routeros.api:
+        path: "ip service"
+        query: ".id address name WHERE name == api"
+      register: isa
+      changed_when: 'isa.msg[0].address != "10.255.5.0/24"'
+
+    - name: Set ip address api restriction where necessary
+      community.routeros.api_find_and_modify:
+        path: "ip service"
+        find:
+          name: api
+        values:
+          address: "10.255.5.0/24"
+        require_matches_min: 1
+        require_matches_max: 1
+      when: isa.changed
+
+    - name: Check ip service ssh
+      community.routeros.api:
+        path: "ip service"
+        query: ".id address name WHERE name == ssh"
+      register: iss
+      changed_when: 'iss.msg[0].address != "10.255.4.0/23,172.20.0.0/24"'
+
+    - name: Set ip address ssh restriction where necessary
+      community.routeros.api_find_and_modify:
+        path: "ip service"
+        find:
+          name: ssh
+        values:
+          address: "10.255.4.0/23,172.20.0.0/24"
+        require_matches_min: 1
+        require_matches_max: 1
+      when: iss.changed
+
+    - name: Check ip service winbox
+      community.routeros.api:
+        path: "ip service"
+        query: ".id address name WHERE name == winbox"
+      register: isw
+      changed_when: 'isw.msg[0].address != "10.255.4.0/23,172.20.0.0/24"'
+
+    - name: Set ip address winbox restriction where necessary
+      community.routeros.api_find_and_modify:
+        path: "ip service"
+        find:
+          name: winbox
+        values:
+          address: "10.255.4.0/23,172.20.0.0/24"
+        require_matches_min: 1
+        require_matches_max: 1
+      when: isw.changed
