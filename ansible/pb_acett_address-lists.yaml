@@ -87,6 +87,12 @@
       when: "item not in current_address_list.msg | map(attribute='address') | list"
       register: res_add
 
+    - name: get
+      community.routeros.api:
+        path: "ip firewall address-list"
+        query: ".id address list WHERE list == V4-AL-bgp.input.accept-nlri-provider"
+      register: current_address_list
+
     - name: remove obsolete addresses from the Mikrotik address list
       community.routeros.api:
         path: "ip firewall address-list"
