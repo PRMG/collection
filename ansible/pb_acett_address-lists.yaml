@@ -68,7 +68,7 @@
         path: "ip firewall address-list"
         add: "list=V4-AL-bgp.input.accept-nlri-provider address={{ item }}"
       loop: "{{ desired_address_list }}"
-      when: "'{{ item }}' not in current_address_list.msg | map(attribute='address') | list"
+      when: "item not in current_address_list.msg | map(attribute='address') | list"
       register: res_add
 
     - name: remove obsolete addresses from the Mikrotik address list
@@ -76,7 +76,7 @@
         path: "ip firewall address-list"
         remove: "'{{ item['.id'] }}'"
       loop: "{{ current_address_list.msg }}"
-      when: "'{{  item.address }}' not in desired_address_list"
+      when: "item.address not in desired_address_list"
       register: res_rm
 
     - name: refresh BGP session with Mixvoip
