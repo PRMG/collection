@@ -2036,10 +2036,6 @@
         query: ".id address list WHERE list == V4-AL-bgp.input.accept-nlri-provider"
       register: current_address_list
 
-    - name: Debug
-      debug:
-        var: current_address_list
-
     - name: Add missing addresses to the MikroTik address list
       community.routeros.api:
         path: "ip firewall address-list"
