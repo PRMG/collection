@@ -2071,7 +2071,7 @@
       community.routeros.api:
         path: "routing bgp session"
         cmd: "refresh V4-AS206610-MixvoipBissen-1 address-family=ip"
-      when: res_bgp_mv.msg is mapping ((res_add.changed is defined and res_add.changed) or (res_rm.changed is defined and res_rm.changed))
+      when: res_bgp_mv.msg is mapping and ((res_add.changed is defined and res_add.changed) or (res_rm.changed is defined and res_rm.changed))
 
     - name: Pause for 5 minutes to build app cache
       ansible.builtin.pause:
@@ -2081,4 +2081,4 @@
       community.routeros.api:
         path: "routing bgp session"
         cmd: "refresh V4-AS009008-VO-1 address-family=ip"
-      when: res_bgp_vo.msg is mapping ((res_add.changed is defined and res_add.changed) or (res_rm.changed is defined and res_rm.changed))
+      when: res_bgp_vo.msg is mapping and ((res_add.changed is defined and res_add.changed) or (res_rm.changed is defined and res_rm.changed))
