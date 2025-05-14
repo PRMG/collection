@@ -2055,18 +2055,12 @@
       when: "item.address not in desired_address_list"
       register: res_rm
 
-    - name: refresh BGP session with Mixvoip
-      community.routeros.api:
+    - name: is Mixvoip BGP session active
+      community.routeros.api
         path: "routing bgp session"
-        cmd: "refresh V4-AS206610-MixvoipBissen-1 address-family=ip"
-      when: (res_add.changed is defined and res_add.changed) or (res_rm.changed is defined and res_rm.changed)
+        query: "name WHERE name == V4-AS206610-MixvoipBissen-1"
+      register: res_bgp_mv
 
-    - name: Pause for 5 minutes to build app cache
-      ansible.builtin.pause:
-        seconds: 25
-
-    - name: refresh BGP session with VO
-      community.routeros.api:
-        path: "routing bgp session"
-        cmd: "refresh V4-AS009008-VO-1 address-family=ip"
-      when: (res_add.changed is defined and res_add.changed) or (res_rm.changed is defined and res_rm.changed)
+    - name: debug
+      debug:
+        var: res_bgp_mv
