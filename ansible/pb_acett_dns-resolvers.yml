@@ -1,0 +1,18 @@
+---
+- name: Check and Install Updates on RouterOS
+  hosts:
+  - acett_switches
+  - acett_routers-rtr
+  gather_facts: no
+  module_defaults:
+    group/community.routeros.api:
+      hostname: "{{ inventory_hostname }}"
+      password: ZvQV6py9CjnEKuRW4bF2TrNYxe8qGJ37
+      username: "{{ ansible_user }}"
+  connection: network_cli
+
+  tasks:
+  - name: "Update DNS resolvers"
+    community.routeros.api:
+      path: "ip dns"
+      cmd: "set servers=83.171.216.34,145.239.65.113,45.11.45.11"
