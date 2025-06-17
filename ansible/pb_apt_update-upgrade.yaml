@@ -8,9 +8,11 @@
     - name: Upgrade the OS
       apt:
         upgrade: full
-    - name: Install btop
+    - name: Install packages
       apt:
-        name: btop
+        name:
+          - btop
+          - net-tools
         state: latest
     - name: Remove dependencies that are no longer required and purge their configuration files
       apt:
@@ -24,12 +26,12 @@
         path: /var/run/reboot-required
         get_checksum: no
       register: reboot_required_file
-    - name: Reboot the Debian or Ubuntu server
-      reboot:
-        msg: "Reboot initiated by Ansible due to kernel updates"
-        connect_timeout: 5
-        reboot_timeout: 300
-        pre_reboot_delay: 0
-        post_reboot_delay: 30
-        test_command: uptime
-      when: reboot_required_file.stat.exists
+#    - name: Reboot the Debian or Ubuntu server
+#      reboot:
+#        msg: "Reboot initiated by Ansible due to kernel updates"
+#        connect_timeout: 5
+#        reboot_timeout: 300
+#        pre_reboot_delay: 0
+#        post_reboot_delay: 30
+#        test_command: uptime
+#      when: reboot_required_file.stat.exists
