@@ -26,6 +26,12 @@
       state: latest
       update_cache: true
 
+  - name: Install curl
+    ansible.builtin.apt:
+      name: curl
+      state: latest
+      update_cache: true
+
   - name: Run installer
     shell: "curl -sSL https://download.technitium.com/dns/install.sh | bash"
     register: output

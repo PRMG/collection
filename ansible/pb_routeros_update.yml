@@ -28,13 +28,13 @@
 
     - name: Display update check result
       debug:
-        var: update_check
+        var: update_check.stdout_lines
 
     - name: Install updates
       community.routeros.command:
         commands:
           - "system package update install"
-      when: "'installed' in update_check.stdout"  # Only install if update is available
+#      when: "'New version is available' in update_check.stdout"  # Only install if update is available
       register: update_install
 
     - name: Reboot the router after the update
