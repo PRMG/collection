@@ -5,7 +5,6 @@ all:
         dns.lx4cg.ampr.org:
         pmg.lx4cg.ampr.org:
         ermesinde.as60391.net:
-        jean.as60391.net:
 
     debian:
       hosts:
@@ -14,14 +13,19 @@ all:
         lx1duc-pmg.lx0duc.ampr.org:
         dns.lx4cg.ampr.org:
         pmg.lx4cg.ampr.org:
-        charlotte.rbx7.as60391.net:
+        #charlotte.rbx7.as60391.net:
         ermesinde.as60391.net:
-        jean.as60391.net:
-        wilhelm.rbx7.as60391.net:
-        ett-sal-vps-01.acett.network:
+        #wilhelm.rbx7.as60391.net:
+        ett-pve-02.dc.acett.network:
+        ett-vps-01.acett.network:
         ett-vps-02.acett.network:
-        fra-vps-01.acett.network:
-        fd4ddf07-0f28-4c26-ac30-a13d83286d34.pub.instances.scw.cloud:
+        ett-vps-03.acett.network:
+        npm.lx0duc.hamnet.radio:
+        grv.dns.as60391.net:
+        pve11.i.dc.lx0duc.hamnet.radio:
+        pve12.i.dc.lx0duc.hamnet.radio:
+        pve13.i.dc.lx0duc.hamnet.radio:
+        pve14.i.dc.lx0duc.hamnet.radio:
 
     dns:
       hosts:
@@ -29,12 +33,15 @@ all:
         dns.lx4cg.ampr.org:
         ermesinde.as60391.net:
         ett-sal-vps-01.acett.network:
-        fra-vps-01.acett.network:
-        fd4ddf07-0f28-4c26-ac30-a13d83286d34.pub.instances.scw.cloud:
+        npm.lx0duc.hamnet.radio:
+        grv.dns.as60391.net:
 
     docker:
       hosts:
         ett-vps-02.acett.network:
+        ett-vps-03.acett.network:
+        npm.lx0duc.hamnet.radio:
+        grv.dns.as60391.net:
 
     ntp:
       hosts:
@@ -42,20 +49,56 @@ all:
         dns.lx4cg.ampr.org:
         ermesinde.as60391.net:
         ett-sal-vps-01.acett.network:
-        fra-vps-01.acett.network:
-        fd4ddf07-0f28-4c26-ac30-a13d83286d34.pub.instances.scw.cloud:
+        npm.lx0duc.hamnet.radio:
+        grv.dns.as60391.net:
 
     routeros:
       hosts:
         rtr-16.lx0duc.hamnet.radio:
+          ansible_port: 15722
       vars:
         ansible_network_os: routeros
         ansible_user: ansible
 
+    acett_switches:
+      hosts:
+        ett-hot-oob-01.oob.acett.network:
+        ett-hot-swi-01.oob.acett.network:
+        ett-hot-swi-02.oob.acett.network:
+        ett-man-oob-01.oob.acett.network:
+        ett-man-swi-01.oob.acett.network:
+        ett-man-swi-02.oob.acett.network:
+        ett-sal-oob-01.oob.acett.network:
+        ett-sal-swi-01.oob.acett.network:
+        ett-sal-swi-02.oob.acett.network:
+      vars:
+        ansible_port: 41222
+        ansible_network_os: routeros
+        ansible_user: ansible
+        ansible_ssh_private_key_file: /home/mstorck/.ssh/id_ed25519
+
+    acett_routers-rtr:
+      hosts:
+        ett-hot-rtr-01.oob.acett.network:
+        ett-sal-rtr-01.oob.acett.network:
+      vars:
+        ansible_port: 41222
+        ansible_network_os: routeros
+        ansible_user: ansible
+        ansible_ssh_private_key_file: /home/mstorck/.ssh/id_ed25519
+
     snmpd:
       hosts:
+        ett-pve-02.dc.acett.network:
         ett-sal-vps-01.acett.network:
-        fd4ddf07-0f28-4c26-ac30-a13d83286d34.pub.instances.scw.cloud:
+        ett-vps-02.acett.network:
+        ett-vps-03.acett.network:
+        pve11.i.dc.lx0duc.hamnet.radio:
+        pve12.i.dc.lx0duc.hamnet.radio:
+        pve13.i.dc.lx0duc.hamnet.radio:
+        pve14.i.dc.lx0duc.hamnet.radio:
+        npm.lx0duc.hamnet.radio:
+        grv.dns.as60391.net:
 
   vars:
     ansible_ssh_private_key_file: /home/mstorck/.ssh/id_ed25519
